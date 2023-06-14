@@ -1,9 +1,9 @@
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-#include <string>
-#include <fstream>
-#include <algorithm>
+#include <iostream> // input/output input-output stream
+#include <vector>   //python lists/dynamic arrays
+#include <unordered_map> //C++ Dictionaries
+#include <string>   //c++ string operations (strcpy,strcat)
+#include <fstream>  //file operations, full form - file stream
+#include <algorithm>    //basic algorithms maximum or minimum element, sorting algorithms, searching algorithms
 
 using namespace std;
 
@@ -61,7 +61,7 @@ vector<string> l6;
 
 class Seating {
 private:
-    unordered_map<int, int> v2;
+    unordered_map<int, int> v2; //.first , .second
     unordered_map<int, int> v4;
     unordered_map<int, int> v6;
     unordered_map<int, int> v8;
@@ -71,7 +71,7 @@ public:
     Seating(int t2, int t4, int t6, int t8) {
         for (int tables = 0; tables < t2; tables++) {
             v2[tables] = 2;
-        }
+        } //{{0,2},{1,2},{2,2}}
         for (int tables = 0; tables < t4; tables++) {
             v4[tables] = 4;
         }
@@ -87,10 +87,10 @@ public:
     int assignTables(int t2, int t4, int t6, int t8, int numpeople) {
         vector<int> vacancy_checker;
         for (auto& kv : v2) {
-            vacancy_checker.push_back(kv.second);
+            vacancy_checker.push_back(kv.second); //vacany_checker = {2,2,2}
         }
         for (auto& kv : v4) {
-            vacancy_checker.push_back(kv.second);
+            vacancy_checker.push_back(kv.second); //vacany_checker = {2,2,2,4,4,4}
         }
         for (auto& kv : v6) {
             vacancy_checker.push_back(kv.second);
@@ -99,9 +99,11 @@ public:
             vacancy_checker.push_back(kv.second);
         }
 
-        if (*max_element(vacancy_checker.begin(), vacancy_checker.end()) == 0) {
+        if (*max_element(vacancy_checker.begin(), vacancy_checker.end()) == 0) { //no seats are free , canteen is full
             return 0;
         }
+
+        //assigns table in ascending order based on the number of people who have come
 
         if (numpeople <= max_element(v2.begin(), v2.end(), [](const auto& a, const auto& b) { return a.second < b.second; })->second) {
             auto it = max_element(v2.begin(), v2.end(), [](const auto& a, const auto& b) { return a.second < b.second; });
@@ -149,16 +151,7 @@ class Canteen{
 public:
     int t2, t4, t6, t8;
     Canteen() {
-        t2 = 0;
-        t4 = 0;
-        t6 = 0;
-        t8 = 0;
-    }
-
-
-
-    void getSeating() {
-        cout << "Enter the number of 2 people sittings: ";
+            cout << "Enter the number of 2 people sittings: ";
         cin >> t2;
         cout << "Enter the number of 4 people sittings: ";
         cin >> t4;
@@ -169,11 +162,15 @@ public:
     }
 
 
+
+   
+
+
     vector<string> takeOrder(const string& cuisine) {
         vector<string> orders;
         int total_sum = 0;
 
-        if (cuisine == "wraps" || cuisine == "Wraps") {
+        if (cuisine == "wraps" || cuisine == "Wraps" || cuisine == "1") {
             for (int i = 0; i < l1.size(); i++) {
                 cout << i + 1 << ". " << l1[i] << endl;
             }
@@ -196,7 +193,7 @@ public:
                 }
             }
         }
-        else if (cuisine == "rolls" || cuisine == "Rolls") {
+        else if (cuisine == "rolls" || cuisine == "Rolls" || cuisine == "2") {
             for (int i = 0; i < l2.size(); i++) {
                 cout << i + 1 << ". " << l2[i] << endl;
             }
@@ -219,7 +216,7 @@ public:
                 }
             }
         }
-        else if (cuisine == "sandwiches" || cuisine == "Sandwiches") {
+        else if (cuisine == "sandwiches" || cuisine == "Sandwiches" || cuisine == "3") {
             for (int i = 0; i < l3.size(); i++) {
                 cout << i + 1 << ". " << l3[i] << endl;
             }
@@ -242,7 +239,7 @@ public:
                 }
             }
         }
-        else if (cuisine == "Burgers" || cuisine == "burgers") {
+        else if (cuisine == "Burgers" || cuisine == "burgers" || cuisine == "4") {
             for (int i = 0; i < l4.size(); i++) {
                 cout << i + 1 << ". " << l4[i] << endl;
             }
@@ -265,7 +262,7 @@ public:
                 }
             }
         }
-        else if (cuisine == "rice and pasta" || cuisine == "Rice and Pasta") {
+        else if (cuisine == "rice and pasta" || cuisine == "Rice and Pasta" || cuisine == "5") {
             for (int i = 0; i < l5.size(); i++) {
                 cout << i + 1 << ". " << l5[i] << endl;
             }
@@ -288,7 +285,7 @@ public:
                 }
             }
         }
-        else if (cuisine == "add-ons"|| cuisine == "Add-ons") {
+        else if (cuisine == "add-ons"|| cuisine == "Add-ons" || cuisine == "6") {
             for (int i = 0; i < l6.size(); i++) {
                 cout << i + 1 << ". " << l6[i] << endl;
             }
@@ -320,10 +317,10 @@ public:
         ofstream file;
         file.open("orders.txt", ios::app);
         
-        file << cuisine<< endl;
+        file << cuisine<< endl; // write("string")
         file << name <<endl;
-        file<< "Table Number" << table_no << endl;
-        file << "Token Number" << token_no<< endl;
+        file<< "Table Number " << table_no << endl;
+        file << "Token Number " << token_no<< endl;
         for (const auto& order : orders) {
             file << order << endl;
         }
@@ -352,12 +349,12 @@ int main() {
           "Hot chicken gravy bread roll"};
 
     l3 = {"Cheese and tomato sandwich",
-                                 "Chicken and cheese",
-                                 "Tuna sandwich",
-                                 "Chicken lettuce and mayo sandwich",
-                                 "Chicken caesar sandwich", 
-                                 "Vegan sandwich",
-                                 "Veg Club Sandwich"};
+        "Chicken and cheese",
+        "Tuna sandwich",
+        "Chicken lettuce and mayo sandwich",
+        "Chicken caesar sandwich", 
+        "Vegan sandwich",
+        "Veg Club Sandwich"};
 
     l4 = {"Chicken Burger",
           "Veg Burger",
@@ -379,33 +376,32 @@ int main() {
     
 
     Canteen canteen;
-    canteen.getSeating();
+    
     Seating sb(canteen.t2,canteen.t4,canteen.t6,canteen.t8);
     while(1)
     {
 
-    string name;
-    cout<<"Enter your name: ";
-    cin>>name;
-    string cuisine;
-    cout << "Enter the cuisine: \n1. Wraps\n2. Rolls\n3. Sandwiches\n4. Burgers\n5. Rice and Pasta\n6. Add-ons\n";
-    cin >> cuisine;
-    
-    int num_of_people;
-    cout<<"Enter the number of customers: ";
-    cin>> num_of_people; 
-    
-   
+        string name;
+        cout<<"Enter your name: ";
+        cin>>name;
+        
+        
+        int num_of_people;
+        cout<<"Enter the number of customers: ";
+        cin>> num_of_people; 
+        int table_no = sb.assignTables(canteen.t2,canteen.t4,canteen.t6,canteen.t8, num_of_people);
 
-    int table_no = sb.assignTables(canteen.t2,canteen.t4,canteen.t6,canteen.t8, num_of_people);
-    vector<string> orders = canteen.takeOrder(cuisine);
+        string cuisine;
+        cout << "Enter the cuisine: \n1. Wraps\n2. Rolls\n3. Sandwiches\n4. Burgers\n5. Rice and Pasta\n6. Add-ons\n";
+        cin >> cuisine;
+        vector<string> orders = canteen.takeOrder(cuisine);
 
-    
+        
 
-    int token = sb.get_token();
-    cout << "Your token number is " << token << endl;
+        int token = sb.get_token();
+        cout << "Your token number is " << token << endl;
 
-    canteen.writeToFile(orders, cuisine, name, table_no, sb.token_no);
+        canteen.writeToFile(orders, cuisine, name, table_no, sb.token_no);
     }
     return 0;
 }
